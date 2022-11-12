@@ -1,0 +1,156 @@
+<!--
+
+Copyright (C) 2022, David Cardoso <slideywotter@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{Title}</title>
+		<link rel="shortcut icon" href="{Favicon}">
+		<link rel="alternate" type="application/rss+xml" href="{RSS}">
+		{block:Description}<meta name="description" content="{MetaDescription}" />{/block:Description}
+		<style type="text/css">
+			body {
+				background-image: url('{HeaderImage}');
+				font-family: sans-serif;
+				font-size: 1.2em;
+			}
+			h1 {
+				margin: .5em 0;
+				font-size: 3em;
+				font-weight: bold;
+				font-family: "Georgia", serif;
+				line-height: 0;
+				text-align: center;
+			}
+			a {
+				color: #7432da;
+				text-decoration: none;
+			}
+			img, audio, video {
+				max-width: 100%;
+				max-height: 90vh;
+			}
+
+			.description {
+				line-height: 1;
+				margin: 0 .1em;
+				text-align: center;
+			}
+			p.blog-link {
+				font-size: 1.2em;
+				font-weight: bold;
+				font-family: "Georgia", serif;
+				line-height: 1;
+				margin: 0 auto 0 5.5vw;
+				padding: .15em 0;
+			}
+			a.blog-link {
+				display: inline-flex;
+				align-items: center;
+				color: black;
+			}
+			.post-wrapper {
+				width: 80%;
+				margin: .45em auto;
+				background: #cccccc88
+			}
+			.center-media {
+				display: block;
+				margin: .2em auto;
+			}
+			.center-text {
+				line-height: 1;
+				width: 83%;
+				margin: .4em auto;
+				text-align: center;
+			}
+			.rows-layout {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-wrap: wrap;
+				max-height: 90vh;
+				margin: .2em auto;
+			}
+			.rows-layout-item {
+				margin: auto .1em;
+			}
+			.buttons {
+				display: flex;
+				justify-content: center;
+			}
+			.reblog_button, .like_button {
+				margin: .1em;
+			}
+			.post-tags {
+				margin: 0 .1em;
+			}
+		</style>
+		<script>
+		    const avatar_url = "{PortraitURL-64}"
+		</script>
+		<script src="https://static.tumblr.com/z7yupsx/K1ariqli3/post_interpreter.js"></script>
+
+	</head>
+	<body>
+
+		<img src="{PortraitURL-128}" class="center-media" loading="lazy"/>
+		<h1>{Title}</h1>
+		{block:Description}<p class="description">{Description}</p>{/block:Description}
+		<p class="description"><a href="/archive">{lang:Archive}</a> - <a href="/ask">Ask me anything</a></p>
+		<p>
+			{block:PreviousPage}
+				<a href="{PreviousPage}" style="margin: .23em;">{lang:Previous page}</a>
+			{/block:PreviousPage}
+			{block:NextPage}
+				<a href="{NextPage}" style="margin: .23em;">{lang:Next page}</a>
+			{/block:NextPage}
+		</p>
+		<div id="post-root"></div>
+		<script>const root = document.getElementById("post-root");</script>
+		<p>
+			{block:PreviousPage}
+				<a href="{PreviousPage}" style="margin: .23em;">{lang:Previous page}</a>
+			{/block:PreviousPage}
+			{block:NextPage}
+				<a href="{NextPage}" style="margin: .23em;">{lang:Next page}</a>
+			{/block:NextPage}
+		</p>
+
+		{block:Posts}
+			<script id="{PostID}" type="application/json">{NPF}</script>
+			<script async>
+				{
+					const meta = Object();
+					meta.post = JSON.parse(document.getElementById("{PostID}").text);
+					meta.like_button = '{LikeButton}';
+					meta.reblog_button = '{ReblogButton}';
+					{block:HasTags}
+						meta.tags = Array();
+						{block:Tags}
+							meta.tags.push("<a href=\"{TagURL}\" class=\"post-tags\">#{Tag}</a>");
+						{/block:Tags}
+					{/block:HasTags}
+
+					npf_interpret(meta);
+				}
+			</script>
+		{/block:Posts}
+	</body>
+</html>
