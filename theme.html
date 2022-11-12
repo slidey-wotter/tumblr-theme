@@ -105,11 +105,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 		<script>
 		    const avatar_url = "{PortraitURL-64}"
 		</script>
-		<script src="https://static.tumblr.com/z7yupsx/K1ariqli3/post_interpreter.js"></script>
-
+		<!--
+		add post_interpreter.js in the theme assets dialogue in the customize menu
+		this should aplly one line of code that looks like this
+		<script src="https://static.tumblr.com/[...]/post_interpreter.js"></script>
+		-->
 	</head>
 	<body>
-
 		<img src="{PortraitURL-128}" class="center-media" loading="lazy"/>
 		<h1>{Title}</h1>
 		{block:Description}<p class="description">{Description}</p>{/block:Description}
