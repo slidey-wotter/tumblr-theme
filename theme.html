@@ -121,7 +121,7 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 		<img src="{PortraitURL-128}" class="center-media" loading="lazy"/>
 		<h1>{Title}</h1>
 		{block:Description}<p class="description">{Description}</p>{/block:Description}
-		<p class="description"><a href="/">{lang:Posts}</a> - <a href="/archive">{lang:Archive}</a> - <a href="/ask">Ask me anything</a></p>
+		<p class="description"><a href="/">{lang:Posts}</a> - <a href="/archive">{lang:Archive}</a>{block:AskEnabled} - <a href="/ask">{AskLabel}</a>{/block:AskEnabled}</p>
 		<p>
 			{block:PreviousPage}
 				<a href="{PreviousPage}" style="margin: .23em;">{lang:Previous page}</a>
