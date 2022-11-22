@@ -121,7 +121,7 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 		<img src="{PortraitURL-128}" class="center-media" loading="lazy"/>
 		<h1>{Title}</h1>
 		{block:Description}<p class="description">{Description}</p>{/block:Description}
-		<p class="description"><a href="/">{lang:Posts}</a> - <a href="/archive">{lang:Archive}</a>{block:AskEnabled} - <a href="/ask">{AskLabel}</a>{/block:AskEnabled}</p>
+		<p class="description"><a href="/">{lang:Posts}</a> - <a href="/archive">{lang:Archive}</a>{block:AskEnabled} - <a href="/ask">{AskLabel}</a>{/block:AskEnabled}{block:SubmissionsEnabled} - <a href="/submit">{SubmitLabel}</a>{/block:SubmissionsEnabled}</p>
 		<p>
 			{block:PreviousPage}
 				<a href="{PreviousPage}" style="margin: .23em;">{lang:Previous page}</a>
@@ -145,7 +145,7 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 		{block:Posts}
 			<script id="{PostID}" type="application/json">{NPF}</script>
 			<script async>
-				{
+				if ("{PostID}" !== "") {
 					const meta = Object();
 					meta.post = JSON.parse(document.getElementById("{PostID}").text);
 					meta.like_button = '{LikeButton}';
@@ -158,6 +158,8 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 					{/block:HasTags}
 
 					npf_interpret(meta);
+				} else { // ask and submit pages have empty post ids
+					console.log("missing support: ask and submit pages");
 				}
 			</script>
 		{/block:Posts}
