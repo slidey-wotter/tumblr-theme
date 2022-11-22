@@ -450,7 +450,7 @@ function image_list_interpret (list) {
 			}
 
 			const source = document.createElement("source");
-			source.media = "(min-width: " + list[i].width + "px)";
+			source.media = "(min-width: " + list[i].width * .75 + "px)";
 			source.srcset = list[i].url;
 			picture.appendChild(source);
 		}
