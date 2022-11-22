@@ -186,14 +186,14 @@ function content_block_interpret (block) {
 			return p;
 		}
 		case "image": {
-			const img = image_list_interpret(block.media);
+			const picture = image_list_interpret(block.media);
 			if (block.alt_text) {
-				img.alt = block.alt_text;
+				picture.alt = block.alt_text;
 			}
 			if (block.caption) {
 				console.log("missing functionality: content type image caption");
 			}
-			return img;
+			return picture;
 		}
 		case "link": {
 			const p = document.createElement("p");
@@ -437,6 +437,8 @@ function translate_long_character_positions (stack, text) {
 }
 
 function image_list_interpret (list) {
+	const picture = document.createElement("picture");
+	picture.className = "center-media";
 	let item;
 	{
 		let selected_index = 0;
@@ -446,13 +448,18 @@ function image_list_interpret (list) {
 				w = list[i].width;
 				selected_index = i;
 			}
+
+			const source = document.createElement("source");
+			source.media = "(min-width: " + list[i].width + "px)";
+			source.srcset = list[i].url;
+			picture.appendChild(source);
 		}
 		item = list[selected_index];
-		// note: we do not use the picture element even though we could
 	}
 	const img = document.createElement("img");
 	img.src = item.url;
 	img.className = "center-media";
-	img.loading = "lazy";
-	return img;
+	img.loading = "lazy"; // note: picture does not support lazy loading?
+	picture.appendChild(img);
+	return picture;
 }
