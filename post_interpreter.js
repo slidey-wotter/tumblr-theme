@@ -439,25 +439,14 @@ function translate_long_character_positions (stack, text) {
 function image_list_interpret (list) {
 	const picture = document.createElement("picture");
 	picture.className = "center-media";
-	let item;
-	{
-		let selected_index = 0;
-		let w = 0;
-		for (let i = 0; i < list.length; i++) {
-			if (list[i].width > w) {
-				w = list[i].width;
-				selected_index = i;
-			}
-
-			const source = document.createElement("source");
-			source.media = "(min-width: " + list[i].width * .75 + "px)";
-			source.srcset = list[i].url;
-			picture.appendChild(source);
-		}
-		item = list[selected_index];
+	for (let item of list) {
+		const source = document.createElement("source");
+		source.media = "(min-width: " + item.width * .75 + "px)";
+		source.srcset = item.url;
+		picture.appendChild(source);
 	}
 	const img = document.createElement("img");
-	img.src = item.url;
+	img.src = list[0].url;
 	img.className = "center-media";
 	img.loading = "lazy"; // note: picture does not support lazy loading?
 	picture.appendChild(img);
