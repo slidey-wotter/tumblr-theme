@@ -500,7 +500,7 @@ function image_list_interpret (list) {
 }
 
 function determine_trimmed_blog_url () {
-	for (let i = 0;; i++) {
+	for (let i = 0; i < window.location.hostname.length; i++) {
 		if (window.location.hostname[i] == ".") {
 			return window.location.hostname.slice(0, i);
 		}
