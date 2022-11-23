@@ -122,29 +122,76 @@ function npf_ask_interpret(post) {
 	}
 
 	// from what it seem you just need to add one of these
-	// with enough height for everything to fit
+	// whith the correct id so it can be accessed by tumblr itself
 	const iframe = document.createElement("iframe");
-	iframe.className = "ask-form";
+	iframe.id = "ask_form";
 	iframe.src = "https://tumblr.com/ask_form/" + window.location.hostname;
 	wrapper.appendChild(iframe);
 }
 
-function npf_submit_interpret(post) {
+function npf_submit_interpret(npf_post, plaintext_post) {
 	const wrapper = document.createElement("div");
 	wrapper.className = "post-wrapper";
 	root.appendChild(wrapper);
 
-	console.log(post);
+	console.log(npf_post);
 	// submit pages also have a post with no id and no layout
 
-	for (const block of post.content) {
+	for (const block of npf_post.content) {
 		wrapper.appendChild(content_block_interpret(block));
 	}
 
-	// same here
+	// however, tumblr does not aplly the correct iframe height immediately,
+	// so we extract it from the plaintext version of the post
 	const iframe = document.createElement("iframe");
-	iframe.className = "submit-form";
+	iframe.id = "submit_form";
 	iframe.src = "https://tumblr.com/submit_form/" + window.location.hostname;
+
+	for (let i = 0;i < plaintext_post.length; i++) {
+		if (plaintext_post[i] != "h") {
+			continue;
+		}
+
+		if (plaintext_post[i + 1] != "e") {
+			continue;
+		}
+
+		if (plaintext_post[i + 2] != "i") {
+			continue;
+		}
+
+		if (plaintext_post[i + 3] != "g") {
+			continue;
+		}
+
+		if (plaintext_post[i + 4] != "h") {
+			continue;
+		}
+
+		if (plaintext_post[i + 5] != "t") {
+			continue;
+		}
+
+		if (plaintext_post[i + 6] != "=") {
+			continue;
+		}
+
+		if (plaintext_post[i + 7] != "\"") {
+			continue;
+		}
+
+		i += 7;
+		let j = i + 1;
+
+		for (; j < plaintext_post.length; j++) {
+			if (plaintext_post[j] == "\"") {
+				break;
+			}
+		}
+
+		iframe.height = plaintext_post.slice(i + 1, j);
+	}
+
 	wrapper.appendChild(iframe);
 }
 

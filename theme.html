@@ -111,17 +111,16 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 			.post-tags {
 				margin: 0 .1em;
 			}
-			.ask_form {
+
+			#ask_form {
 				display: block;
 				width: 90%;
-				height: 258px;
 				margin: auto;
 				border: none;
 			}
-			.submit-form {
+			#submit_form {
 				display: block;
 				width: 90%;
-				height: 425px;
 				margin: auto;
 				border: none;
 			}
@@ -157,6 +156,7 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 		<p>hi, <a href="slidey-wotter.tumblr.com">slidey</a> made this theme and you can have it <a href="https://github.com/slidey-wotter/tumblr-theme">here</a></p>
 
 		{block:Posts}
+			{block:Text}<script class="plaintext-post" type="text/plain">{Body}</script>{/block:Text}
 			<script id="{PostID}" class="npf-post" type="application/json">{NPF}</script>
 			<script async>
 				if ("{PostID}" !== "") {
@@ -177,8 +177,9 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 						const post = JSON.parse(document.getElementsByClassName("npf-post")[0].text);
 						npf_ask_interpret(post);
 					} else if (window.location.pathname == "/submit") {
-						const post = JSON.parse(document.getElementsByClassName("npf-post")[0].text);
-						npf_submit_interpret(post);
+						const npf_post = JSON.parse(document.getElementsByClassName("npf-post")[0].text);
+						const plaintext_post = document.getElementsByClassName("plaintext-post")[0].text;
+						npf_submit_interpret(npf_post, plaintext_post);
 					}
 				}
 			</script>
