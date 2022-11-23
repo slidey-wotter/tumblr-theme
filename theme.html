@@ -111,6 +111,13 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 			.post-tags {
 				margin: 0 .1em;
 			}
+			.ask_form {
+				display: block;
+				width: 90%;
+				height: 258px;
+				margin: auto;
+				border: none;
+			}
 		</style>
 		<script>
 		    const avatar_url = "{PortraitURL-64}"
@@ -143,7 +150,7 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 		<p>hi, <a href="slidey-wotter.tumblr.com">slidey</a> made this theme and you can have it <a href="https://github.com/slidey-wotter/tumblr-theme">here</a></p>
 
 		{block:Posts}
-			<script id="{PostID}" type="application/json">{NPF}</script>
+			<script id="{PostID}" class="npf-post" type="application/json">{NPF}</script>
 			<script async>
 				if ("{PostID}" !== "") {
 					const meta = Object();
@@ -158,8 +165,14 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 					{/block:HasTags}
 
 					npf_interpret(meta);
-				} else { // ask and submit pages have empty post ids
-					console.log("missing support: ask and submit pages");
+				} else { // ask and submit pages have posts with empty ids
+					if (window.location.pathname == "/ask") {
+						const post = JSON.parse(document.getElementsByClassName("npf-post")[0].text);
+						npf_ask_interpret(post);
+					} else if (window.location.pathname == "/submit") {
+						const post = JSON.parse(document.getElementsByClassName("npf-post")[0].text);
+						npf_submit_interpret(post);
+					}
 				}
 			</script>
 		{/block:Posts}

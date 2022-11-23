@@ -108,6 +108,32 @@ function npf_interpret (meta) {
 	}
 }
 
+function npf_ask_interpret(post) {
+	const wrapper = document.createElement("div");
+	wrapper.className = "post-wrapper";
+	root.appendChild(wrapper);
+
+	console.log(post);
+	// ask pages have a post with no id
+	// and no layout (at the time this was written)
+
+	for (const block of post.content) {
+		wrapper.appendChild(content_block_interpret(block));
+	}
+
+	// from what it seem you just need to add one of these
+	// with enough height for everything to fit
+	const iframe = document.createElement("iframe");
+	iframe.className = "ask-form";
+	iframe.src = "https://tumblr.com/ask_form/" + window.location.hostname;
+	wrapper.appendChild(iframe);
+}
+
+function npf_submit_interpret(post) {
+	console.log(post);
+	// submit pages have a post with no id
+}
+
 function layout_interpret	(target, layout, content) {
 	for (const block of layout) {
 		if (block.attribution) {
@@ -457,4 +483,12 @@ function image_list_interpret (list) {
 	img.loading = "lazy"; // note: picture does not support lazy loading?
 	picture.appendChild(img);
 	return picture;
+}
+
+function determine_trimmed_blog_url () {
+	for (let i = 0;; i++) {
+		if (window.location.hostname[i] == ".") {
+			return window.location.hostname.slice(0, i);
+		}
+	}
 }
