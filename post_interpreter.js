@@ -114,7 +114,7 @@ function npf_ask_interpret(post) {
 	root.appendChild(wrapper);
 
 	console.log(post);
-	// ask pages have a post with no id
+	// ask pages have a incomplete post with no id
 	// and no layout (at the time this was written)
 
 	for (const block of post.content) {
@@ -130,8 +130,22 @@ function npf_ask_interpret(post) {
 }
 
 function npf_submit_interpret(post) {
+	const wrapper = document.createElement("div");
+	wrapper.className = "post-wrapper";
+	root.appendChild(wrapper);
+
 	console.log(post);
-	// submit pages have a post with no id
+	// submit pages also have a post with no id and no layout
+
+	for (const block of post.content) {
+		wrapper.appendChild(content_block_interpret(block));
+	}
+
+	// same here
+	const iframe = document.createElement("iframe");
+	iframe.className = "submit-form";
+	iframe.src = "https://tumblr.com/submit_form/" + window.location.hostname;
+	wrapper.appendChild(iframe);
 }
 
 function layout_interpret	(target, layout, content) {
