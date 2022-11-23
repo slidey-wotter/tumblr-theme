@@ -146,8 +146,38 @@ function npf_submit_interpret(npf_post, plaintext_post) {
 	const iframe = document.createElement("iframe");
 	iframe.id = "submit_form";
 	iframe.src = "https://tumblr.com/submit_form/" + window.location.hostname;
+	let i = 0;
+	for (;i < plaintext_post.length; i++) {
+		if (plaintext_post[i] != "<") {
+			continue;
+		}
 
-	for (let i = 0;i < plaintext_post.length; i++) {
+		if (plaintext_post[i + 1] != "i") {
+			continue;
+		}
+
+		if (plaintext_post[i + 2] != "f") {
+			continue;
+		}
+
+		if (plaintext_post[i + 3] != "r") {
+			continue;
+		}
+
+		if (plaintext_post[i + 4] != "a") {
+			continue;
+		}
+
+		if (plaintext_post[i + 5] != "m") {
+			continue;
+		}
+
+		if (plaintext_post[i + 6] != "e") {
+			continue;
+		}	
+	}
+
+	for (;i < plaintext_post.length; i++) {
 		if (plaintext_post[i] != "h") {
 			continue;
 		}
