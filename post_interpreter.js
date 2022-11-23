@@ -16,6 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
+
+let trimmed_blog_url; // (cached) blog url trimmed to the first '.'
+
 function npf_interpret (meta) {
 	const wrapper = document.createElement("div");
 	wrapper.className = "post-wrapper";
@@ -67,14 +70,17 @@ function npf_interpret (meta) {
 		const p = document.createElement("p");
 		p.className = "blog-link";
 		const a = document.createElement("a");
-		a.href = "slidey-wotter.tumblr.com";
+		a.href = window.location.hostname;
 		a.className = "blog-link";
 		const img = document.createElement("img");
 		img.src = avatar_url; // note: this must be daclared in the theme html page using tumblr's meta html
 		img.style = "width: 1.5em; margin-right: .3em;";
 		img.loading = "lazy";
 		a.appendChild(img);
-		a.innerHTML += "slidey-wotter";
+		if (!trimmed_blog_url) {
+			trimmed_blog_url = determine_trimmed_blog_url();
+		}
+		a.innerHTML += trimmed_blog_url;
 		p.appendChild(a);
 		wrapper.appendChild(p);
 		if (meta.post.layout && meta.post.layout.length > 0) {
