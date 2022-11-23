@@ -146,8 +146,9 @@ function npf_submit_interpret(npf_post, plaintext_post) {
 	const iframe = document.createElement("iframe");
 	iframe.id = "submit_form";
 	iframe.src = "https://tumblr.com/submit_form/" + window.location.hostname;
+
 	let i = 0;
-	for (;i < plaintext_post.length; i++) {
+	for (;i + 6 < plaintext_post.length; i++) {
 		if (plaintext_post[i] != "<") {
 			continue;
 		}
@@ -174,10 +175,13 @@ function npf_submit_interpret(npf_post, plaintext_post) {
 
 		if (plaintext_post[i + 6] != "e") {
 			continue;
-		}	
+		}
+
+		i += 7;
+		break;
 	}
 
-	for (;i < plaintext_post.length; i++) {
+	for (;i + 7 < plaintext_post.length; i++) {
 		if (plaintext_post[i] != "h") {
 			continue;
 		}
@@ -210,7 +214,7 @@ function npf_submit_interpret(npf_post, plaintext_post) {
 			continue;
 		}
 
-		i += 7;
+		i += 8;
 		let j = i + 1;
 
 		for (; j < plaintext_post.length; j++) {
@@ -219,7 +223,8 @@ function npf_submit_interpret(npf_post, plaintext_post) {
 			}
 		}
 
-		iframe.height = plaintext_post.slice(i + 1, j);
+		iframe.style = "height: " + plaintext_post.slice(i, j) + "px;";
+		break;
 	}
 
 	wrapper.appendChild(iframe);
