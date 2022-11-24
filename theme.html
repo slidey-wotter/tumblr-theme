@@ -63,10 +63,6 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 				text-align: center;
 			}
 			p.blog-link {
-				font-size: 1.2em;
-				font-weight: bold;
-				font-family: "Georgia", serif;
-				line-height: 1;
 				margin: 0 auto 0 5.5vw;
 				padding: .15em 0;
 				overflow: hidden;
@@ -74,7 +70,28 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 			a.blog-link {
 				display: inline-flex;
 				align-items: center;
+				font-size: 1.2em;
+				font-weight: bold;
+				font-family: "Georgia", serif;
 				color: black;
+				line-height: 1;
+			}
+			p.reblogged-link {
+				display: flex;
+				align-items: center;
+				margin: 0 auto 0 5.5vw;
+				padding: .15em 0;
+				overflow: hidden;
+			}
+			a.reblogged-link {
+				display: inline-flex;
+				align-items: center;
+				padding-left: .2em;
+				font-size: 1.2em;
+				font-weight: bold;
+				font-family: "Georgia", serif;
+				color: black;
+				line-height: 1;
 			}
 			.post-wrapper {
 				max-width: 1024px;
@@ -170,6 +187,10 @@ and you can have it at https://github.com/slidey-wotter/tumblr-theme
 							meta.tags.push("<a href=\"{TagURL}\" class=\"post-tags\">#{Tag}</a>");
 						{/block:Tags}
 					{/block:HasTags}
+					{block:RebloggedFrom}
+						meta.reblogged = "{ReblogParentName}";
+						meta.reblogged_url = "{ReblogParentURL}";
+					{/block:RebloggedFrom}
 
 					npf_interpret(meta);
 				} else { // ask and submit pages have posts with empty ids

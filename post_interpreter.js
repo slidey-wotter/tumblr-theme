@@ -92,6 +92,23 @@ function npf_interpret (meta) {
 		}
 	}
 
+	if (meta.reblogged) {
+		const p = document.createElement("p");
+		p.className = "reblogged-link";
+		p.innerHTML = "reblogged from";
+		const a = document.createElement("a");
+		a.href = meta.reblogged_url;
+		a.className = "reblogged-link";
+		const img = document.createElement("img");
+		img.src = "https://api.tumblr.com/v2/blog/" + meta.reblogged + ".tumblr.com/avatar";
+		img.style = "width: 1.5em; margin-right: .3em;";
+		img.loading = "lazy";
+		a.appendChild(img);
+		a.innerHTML += meta.reblogged;
+		p.appendChild(a);
+		wrapper.appendChild(p);
+	}
+
 	const span = document.createElement("span");
 	span.className = "buttons";
 	span.innerHTML = meta.like_button + meta.reblog_button;
