@@ -31,8 +31,8 @@ function npf_interpret (meta) {
 		for (const item of trail) {
 			if (item.blog) {
 				const blog = item.blog;
-				const p = document.createElement("p");
-				p.className = "blog-link";
+				const div = document.createElement("div");
+				div.className = "blog-link";
 				if (blog.active) { // note: most blogs marked as inactive seem to point to tumblr's 404 page url
 					const a = document.createElement("a");
 					a.href = blog.url;
@@ -43,16 +43,16 @@ function npf_interpret (meta) {
 					img.loading = "lazy";
 					a.appendChild(img);
 					a.innerHTML += blog.name;
-					p.appendChild(a);
+					div.appendChild(a);
 				} else {
-					p.innerHTML = blog.name;
+					div.innerHTML = blog.name;
 				}
-				wrapper.appendChild(p);
+				wrapper.appendChild(div);
 			} else if (item.broken_blog_name) {
-				const p = document.createElement("p");
-				p.className = "blog-link";
-				p.innerHTML = item.broken_blog_name;
-				wrapper.appendChild(p);
+				const div = document.createElement("p");
+				div.className = "blog-link";
+				div.innerHTML = item.broken_blog_name;
+				wrapper.appendChild(div);
 			}
 			if (item.layout.length > 0) {
 				layout_interpret(wrapper, item.layout, item.content)
@@ -67,9 +67,9 @@ function npf_interpret (meta) {
 	if (meta.post.content && meta.post.content.length > 0) {
 		// pretend we have our posts as reblogs of ourselves
 		// note: it is necessary for this to come after the reblog trail
-		const p = document.createElement("p");
-		p.className = "blog-link";
-		const a = document.createElement("a");
+		const div = document.createElement("div");
+		div.className = "blog-link";
+		const a = document.createElement("");
 		a.href = window.location.hostname;
 		a.className = "blog-link";
 		const img = document.createElement("img");
@@ -81,8 +81,8 @@ function npf_interpret (meta) {
 			trimmed_blog_url = determine_trimmed_blog_url();
 		}
 		a.innerHTML += trimmed_blog_url;
-		p.appendChild(a);
-		wrapper.appendChild(p);
+		div.appendChild(a);
+		wrapper.appendChild(div);
 		if (meta.post.layout && meta.post.layout.length > 0) {
 			layout_interpret(wrapper, meta.post.layout, meta.post.content)
 		} else {
@@ -93,9 +93,9 @@ function npf_interpret (meta) {
 	}
 
 	if (meta.reblogged) {
-		const p = document.createElement("p");
-		p.className = "reblogged-link";
-		p.innerHTML = "reblogged from";
+		const div = document.createElement("div");
+		div.className = "reblogged-link";
+		div.innerHTML = "reblogged from";
 		const a = document.createElement("a");
 		a.href = meta.reblogged_url;
 		a.className = "reblogged-link";
@@ -105,8 +105,8 @@ function npf_interpret (meta) {
 		img.loading = "lazy";
 		a.appendChild(img);
 		a.innerHTML += meta.reblogged;
-		p.appendChild(a);
-		wrapper.appendChild(p);
+		div.appendChild(a);
+		wrapper.appendChild(div);
 	}
 
 	const span = document.createElement("span");
