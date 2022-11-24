@@ -49,7 +49,7 @@ function npf_interpret (meta) {
 				}
 				wrapper.appendChild(div);
 			} else if (item.broken_blog_name) {
-				const div = document.createElement("p");
+				const div = document.createElement("div");
 				div.className = "blog-link";
 				div.innerHTML = item.broken_blog_name;
 				wrapper.appendChild(div);
